@@ -12,10 +12,11 @@ import org.springframework.stereotype.Component;
  * @Desc 写点注释吧
  **/
 @Configuration
-@ConfigurationProperties(prefix = "zk", ignoreUnknownFields = false)
+@ConfigurationProperties(prefix = "my", ignoreUnknownFields = false)
 @PropertySource("classpath:config/my.properties")
 @Data
 @Component
 public class MyProperties {
-    private String zkAddress;
+    private String serverAddress;   //服务器发布的IP
+    private Integer delay;  //延时发布时间
 }

@@ -21,7 +21,6 @@ import org.springframework.stereotype.Component;
  * @Desc Rpc的服务端
  **/
 @Slf4j
-@Component
 public class RpcServer{
 
     private static String registerAddress;

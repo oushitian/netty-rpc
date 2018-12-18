@@ -29,10 +29,10 @@ public class ServiceConfig {
 
     /**
      * 是否延迟发布
-     * @param delay
      */
-    public synchronized void export(Integer delay){
-        //判断是否延迟加载
+    public synchronized void export(){
+        //判断是否延迟加载,获取配置文件的属性
+        Integer delay = myProperties.getDelay();
         if (delay != null && delay > 0) {
             delayExportExecutor.schedule(() -> doExport(), delay, TimeUnit.MILLISECONDS);
         }else {
@@ -45,7 +45,7 @@ public class ServiceConfig {
             return;
         }
         exported = Boolean.TRUE;
-        new RpcServer().start0(myProperties.getZkAddress());
+        new RpcServer().start0(myProperties.getServerAddress());
     }
 
 }

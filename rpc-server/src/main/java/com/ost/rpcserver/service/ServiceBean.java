@@ -1,11 +1,8 @@
 package com.ost.rpcserver.service;
 
 import com.ost.rpcserver.annotation.RpcServerAnno;
-import com.ost.rpcserver.config.MyProperties;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
@@ -19,11 +16,7 @@ import java.util.Map;
  * @Desc 写点注释吧
  **/
 @Component
-@EnableConfigurationProperties(MyProperties.class)
 public class ServiceBean extends ServiceConfig implements InitializingBean, ApplicationContextAware {
-
-    @Autowired
-    private MyProperties myProperties;
 
     private static ApplicationContext applicationContext;
 
@@ -54,7 +47,7 @@ public class ServiceBean extends ServiceConfig implements InitializingBean, Appl
     public void afterPropertiesSet() throws Exception {
         if (!serviceMap.isEmpty()){ //不为空说明已经初始化完，就启动服务器
             //rpcServer.start0(myProperties.getZkAddress());
-            export(null);
+            export();
         }
     }
 }
