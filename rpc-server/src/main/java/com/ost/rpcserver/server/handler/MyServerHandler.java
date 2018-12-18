@@ -1,8 +1,10 @@
 package com.ost.rpcserver.server.handler;
 
-import com.ost.nettyrpc.request.RpcRequest;
-import com.ost.nettyrpc.response.RpcResponse;
-import com.ost.nettyrpc.service.ServiceInitializer;
+
+import com.ost.rpcapi.request.RpcRequest;
+import com.ost.rpcapi.response.RpcResponse;
+import com.ost.rpcserver.service.ServiceBean;
+import com.ost.rpcserver.service.ServiceConfig;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +43,7 @@ public class MyServerHandler extends SimpleChannelInboundHandler<RpcRequest> {
         Class[] parameterTypes = request.getParameterTypes();
         Object[] parameters = request.getParameters();
 
-        Object obj = ServiceInitializer.getService(className);
+        Object obj = ServiceBean.getService(className);
         Class clazz = obj.getClass();
         Method method = clazz.getMethod(methodName,parameterTypes);
         Object result = method.invoke(obj,parameters);      //      通过方法的反射调用
