@@ -3,9 +3,10 @@ package com.ost.rpcserver.server;
 
 import com.ost.rpcapi.codec.RpcDecoder;
 import com.ost.rpcapi.codec.RpcEncoder;
-import com.ost.rpcapi.register.ServiceCenter;
 import com.ost.rpcapi.request.RpcRequest;
 import com.ost.rpcapi.response.RpcResponse;
+import com.ost.rpcregister.DefaultRegisterCenter;
+import com.ost.rpcregister.interfaces.RegisterCenter;
 import com.ost.rpcserver.server.handler.MyServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
@@ -13,7 +14,6 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 /**
  * @Author xyl
@@ -27,7 +27,7 @@ public class RpcServer{
 
     private static boolean isStarted = false;
 
-    private ServiceCenter serviceCenter = new ServiceCenter();
+    private RegisterCenter registerCenter = new DefaultRegisterCenter();
 
     public void start0(String registerAddress){
         if (isStarted) {
@@ -61,8 +61,8 @@ public class RpcServer{
             int port = Integer.parseInt(array[1]);
             ChannelFuture future = strap.bind(host, port).sync();
             //注册到zk上
-            if (serviceCenter != null) {
-                serviceCenter.register("dubboServer",registerAddress); // 注册服务地址
+            if (registerCenter != null) {
+                registerCenter.register("dubboServer",registerAddress); // 注册服务地址
             }
             future.channel().closeFuture().sync();
         } catch (InterruptedException e) {

@@ -6,6 +6,7 @@
         <module>rpc-server</module>
         <module>rpc-client</module>
         <module>rpc-api</module>
+        <module>rpc-register</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -27,6 +28,7 @@
         <protostuff.version>1.0.8</protostuff.version>
         <zkclient.version>0.11</zkclient.version>
         <lombok.version>1.18.0</lombok.version>
+        <curator.version>4.0.1</curator.version>
     </properties>
 
     <!--父pom管理引用的依赖 需要有具体的版本号，然后子模块继承-->
@@ -75,11 +77,27 @@
                 <version>${protostuff.version}</version>
             </dependency>
 
+            <!--<dependency>-->
+                <!--<groupId>com.101tec</groupId>-->
+                <!--<artifactId>zkclient</artifactId>-->
+                <!--<version>${zkclient.version}</version>-->
+            <!--</dependency>-->
+
+            <!-- https://mvnrepository.com/artifact/org.apache.curator/curator-framework -->
             <dependency>
-                <groupId>com.101tec</groupId>
-                <artifactId>zkclient</artifactId>
-                <version>${zkclient.version}</version>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-framework</artifactId>
+                <version>${curator.version}</version>
             </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.apache.curator/curator-recipes -->
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>${curator.version}</version>
+            </dependency>
+
+
         </dependencies>
     </dependencyManagement>
 

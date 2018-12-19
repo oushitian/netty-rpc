@@ -1,10 +1,11 @@
 package com.ost.rpcclient.client.proxy;
 
-
-import com.ost.rpcapi.register.ServiceCenter;
 import com.ost.rpcapi.request.RpcRequest;
 import com.ost.rpcapi.response.RpcResponse;
 import com.ost.rpcclient.client.RpcClient;
+import com.ost.rpcregister.DefaultServiceDiscovery;
+import com.ost.rpcregister.conf.ZKConfig;
+import com.ost.rpcregister.interfaces.ServiceDiscovery;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -20,7 +21,7 @@ public class RpcProxy implements InvocationHandler {
 
     private RpcClient client;
 
-    private ServiceCenter serviceCenter = new ServiceCenter();
+    private ServiceDiscovery serviceDiscovery = new DefaultServiceDiscovery(ZKConfig.CONNECTION);
 
     private static AtomicLong id = new AtomicLong(0);
 
@@ -38,7 +39,7 @@ public class RpcProxy implements InvocationHandler {
         rpcRequest.setParameterTypes(method.getParameterTypes());
         rpcRequest.setParameters(args);
 
-        String[] address = serviceCenter.getService("dubboServer").split(":");
+        String[] address = serviceDiscovery.discover("dubboServer").split(":");
         String host = address[0];
         int port = Integer.parseInt(address[1]);
 

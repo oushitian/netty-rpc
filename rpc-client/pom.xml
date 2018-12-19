@@ -20,6 +20,11 @@
             <artifactId>rpc-api</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.ost</groupId>
+            <artifactId>rpc-register</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 
