@@ -1,7 +1,9 @@
 package com.ost.rpcregister;
 
 import com.ost.rpcregister.conf.ZKConfig;
+import com.ost.rpcregister.interfaces.LoadBalance;
 import com.ost.rpcregister.interfaces.ServiceDiscovery;
+import com.ost.rpcregister.loadbalance.RoundRobinLoadBalance;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.cache.PathChildrenCache;
@@ -53,8 +55,9 @@ public class DefaultServiceDiscovery implements ServiceDiscovery {
         //监听子节点的变化
         registerWatcher(path);
 
-        //这里可以实现负载均衡算法
-        return addressLocal.get(0);
+        //这里可以实现负载均衡算法,默认加权
+        LoadBalance loadBalance = new RoundRobinLoadBalance();
+        return loadBalance.select(addressLocal);
     }
 
     private void registerWatcher(final String path){
